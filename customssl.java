@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.net.ssl.SSLContext;
 import java.security.cert.X509Certificate;
 
-
 @Configuration
 public class RestTemplateConfig {
 
@@ -21,7 +20,7 @@ public class RestTemplateConfig {
         // Disable SSL verification
         TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
         
-        SSLContext sslContext = SSLContexts.custom()
+        SSLContext sslContext = SSLContextBuilder.create()
                 .loadTrustMaterial(null, acceptingTrustStrategy)
                 .build();
         
