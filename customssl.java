@@ -47,7 +47,7 @@ public class MessageSourceConfiguration {
     
     
     @Bean("springTemplateEngine")
-    public SpringTemplateEngine citiTemplateEngine(MessageSource messageSource) {
+    public SpringTemplateEngine cptoTemplateEngine(MessageSource messageSource) {
         SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
         springTemplateEngine.setTemplateEngineMessageSource(messageSource);
         return springTemplateEngine;
