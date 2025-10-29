@@ -1,0 +1,5 @@
+# Find files larger than 300MB in the current state
+find . -type f -size +300M
+
+# Find large files in the entire history
+git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | awk '/^blob/ {if($3 > 300*1024*1024) print $3/1024/1024 " MB " $4}' | sort -nr
