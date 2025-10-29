@@ -3,3 +3,51 @@ find . -type f -size +300M
 
 # Find large files in the entire history
 git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | awk '/^blob/ {if($3 > 300*1024*1024) print $3/1024/1024 " MB " $4}' | sort -nr
+
+
+
+# Clone the repository
+git clone <bitbucket-repo-url> <repo-name>
+cd <repo-name>
+
+# Switch to the release/20250822 branch
+git checkout release/20250822
+
+# Remove the java_pid24964.hprof file from this branch's history
+git filter-branch --tree-filter "if exist \"java_pid24964.hprof\" del /q \"java_pid24964.hprof\"" --prune-empty release/20250822
+
+# Clone the repository
+git clone <bitbucket-repo-url> <repo-name>
+cd <repo-name>
+
+# Switch to the release/20250822 branch
+git checkout release/20250822
+
+# Remove the java_pid24964.hprof file from this branch's history
+git filter-branch --tree-filter "if exist \"java_pid24964.hprof\" del /q \"java_pid24964.hprof\"" --prune-empty release/20250822
+
+# Check if the file is completely gone
+dir /s /b * | findstr "java_pid24964.hprof"
+
+# Check the commit history
+git log --oneline -10
+
+# Check repository size
+git count-objects -vH
+
+# Force push this branch to test
+git push origin --force release/20250822
+
+# Remove the file from ALL branches
+git filter-branch --tree-filter "if exist \"java_pid24964.hprof\" del /q \"java_pid24964.hprof\"" --prune-empty -- --all
+
+# Clean up the backup refs
+git for-each-ref --format="%(refname)" refs/original/ | for /f %i in ('more') do git update-ref -d %i
+
+# Clean up and optimize
+git reflog expire --expire=now --all
+git gc --prune=now --aggressive
+
+
+git push origin --force --all
+git push origin --force --tags
