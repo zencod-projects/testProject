@@ -6,3 +6,5 @@ git rev-list --objects --all \
    java -jar bfg.jar --strip-blobs-bigger-than 100M --no-clean your-repo.git
 
 git rev-list --all --objects | grep java_pid24964.hprof
+
+git rev-list --all -- java_pid24964.hprof.REMOVED.git-id
