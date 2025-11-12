@@ -25,3 +25,6 @@ done
 for ref in $(git for-each-ref --format='%(refname:short)' refs/tags/); do
   git push origin --force "$ref"
 done
+
+eval "$(ssh-agent -s)"         # start the agent
+ssh-add ~/.ssh/id_rsa          # enter passphrase once
