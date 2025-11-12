@@ -8,3 +8,8 @@ git rev-list --objects --all \
 git rev-list --all --objects | grep java_pid24964.hprof
 
 git rev-list --all -- java_pid24964.hprof.REMOVED.git-id
+
+# list refs on both sides (branches + tags) and diff them
+git ls-remote --heads --tags origin | sort > /tmp/origin.refs
+git for-each-ref --format='%(objectname)\t%(refname)' refs/heads/ refs/tags/ | sort > /tmp/local.refs
+diff -u /tmp/local.refs /tmp/origin.refs
