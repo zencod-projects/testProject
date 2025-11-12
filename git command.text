@@ -1,3 +1,6 @@
 git rev-list --objects --all \
 | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
 | awk '$1 == "blob" && $3 >= 100*1024*1024 { printf "%-12s %-40s %s\n", $1, $2, $4 }'
+
+
+   java -jar bfg.jar --strip-blobs-bigger-than 100M --no-clean your-repo.git
